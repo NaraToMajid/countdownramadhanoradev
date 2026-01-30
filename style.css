@@ -1,0 +1,816 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(180deg, 
+        #0c1e3e 0%, 
+        #1a2b5a 40%, 
+        #2a3f7a 100%);
+    color: #fff;
+    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Mode Siang */
+body.day-mode {
+    background: linear-gradient(180deg, 
+        #87CEEB 0%, 
+        #98d8f0 40%, 
+        #a9e2f5 100%);
+}
+
+/* Efek Gradien Dinamis */
+.gradient-bg {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,215,0,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(255,107,107,0.08) 0%, transparent 50%);
+    animation: gradientMove 20s ease infinite alternate;
+    z-index: 0;
+}
+
+@keyframes gradientMove {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(5%, 5%) rotate(5deg); }
+}
+
+/* Efek Cahaya */
+.light-beam {
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    opacity: 0.3;
+    animation: beamRotate 40s linear infinite;
+    z-index: 0;
+}
+
+@keyframes beamRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.container {
+    max-width: 1200px;
+    width: 95%;
+    height: 95vh;
+    text-align: center;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 20px;
+}
+
+.header {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.title-container {
+    position: relative;
+    display: inline-block;
+}
+
+.title-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(255,215,0,0.3) 0%, transparent 70%);
+    filter: blur(20px);
+    z-index: -1;
+    opacity: 0.7;
+}
+
+.header h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 4rem;
+    background: linear-gradient(45deg, #FFD700, #FFA500, #FF8C00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 10px;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    letter-spacing: 1px;
+}
+
+.header p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+body.day-mode .header p {
+    color: rgba(0, 0, 0, 0.8);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.ramadan-date {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 20px;
+    padding: 25px;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.ramadan-date::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #FFD700, #FFA500, #FF8C00);
+}
+
+.ramadan-date:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.ramadan-date h2 {
+    font-size: 2.2rem;
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.ramadan-date p {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+body.day-mode .ramadan-date {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(12, 59, 111, 0.3);
+}
+
+body.day-mode .ramadan-date p {
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.countdown-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin: 40px auto;
+    max-width: 900px;
+    width: 100%;
+}
+
+.countdown-box {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 30px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.countdown-box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #FFD700, #FFA500);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+}
+
+.countdown-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 215, 0, 0.15);
+}
+
+.countdown-box:hover::after {
+    transform: translateX(0);
+}
+
+body.day-mode .countdown-box {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(12, 59, 111, 0.2);
+}
+
+.countdown-value {
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #FFD700, #FFA500, #FF8C00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.countdown-label {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+body.day-mode .countdown-label {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+/* Elemen Visual - Matahari di Kiri */
+.sun-moon {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    z-index: 50;
+    cursor: pointer;
+    transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Removed blinking animation */
+}
+
+/* Posisi bulan di kanan atas */
+.moon-mode {
+    background: radial-gradient(circle at 30% 30%, #f9f3d5, #e6d8a5, #d4c295);
+    box-shadow: 
+        0 0 60px rgba(249, 243, 213, 0.8),
+        0 0 100px rgba(249, 243, 213, 0.4),
+        inset 0 0 20px rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    transform: translateX(-100px);
+}
+
+/* Posisi matahari di kiri atas */
+.sun-mode {
+    background: radial-gradient(circle at 30% 30%, #FFD700, #FFA500, #FF8C00);
+    box-shadow: 
+        0 0 80px rgba(255, 215, 0, 0.9),
+        0 0 120px rgba(255, 165, 0, 0.6),
+        inset 0 0 30px rgba(255, 255, 255, 0.8);
+    opacity: 0;
+    transform: translateX(100px);
+}
+
+/* Posisi akhir untuk bulan (kanan atas) */
+.moon-mode.active {
+    opacity: 1;
+    top: 30px;
+    right: 30px;
+    transform: translateX(0);
+}
+
+/* Posisi akhir untuk matahari (kiri atas) */
+.sun-mode.active {
+    opacity: 1;
+    top: 30px;
+    left: 30px;
+    transform: translateX(0);
+}
+
+/* Bintang-bintang (hanya malam) */
+.stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.star {
+    position: absolute;
+    background-color: #fff;
+    border-radius: 50%;
+    animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* Bintang Jatuh MIRING (hanya malam) - Diperbaiki untuk lebih miring */
+.shooting-star {
+    position: absolute;
+    width: 180px; /* Lebih panjang untuk efek miring */
+    height: 2px;
+    background: linear-gradient(90deg, 
+        rgba(255,255,255,0) 0%, 
+        rgba(255,255,255,1) 20%, 
+        rgba(255,255,255,1) 50%, 
+        rgba(255,255,255,0) 100%);
+    z-index: 5;
+    opacity: 0;
+    transform: rotate(-60deg); /* Lebih miring dari sebelumnya */
+    filter: blur(1px);
+    transform-origin: left center;
+}
+
+/* Efek cahaya ekor bintang jatuh */
+.shooting-star::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        rgba(255,255,255,0) 0%, 
+        rgba(255,255,255,0.7) 20%, 
+        rgba(255,255,255,0) 100%);
+    filter: blur(3px);
+}
+
+/* Awan (hanya siang) */
+.cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50px;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 1.2s;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.1));
+}
+
+.cloud:nth-child(1) {
+    width: 180px;
+    height: 70px;
+    top: 50px;
+    left: 20%;
+    animation: cloudFloat 25s linear infinite;
+}
+
+.cloud:nth-child(2) {
+    width: 220px;
+    height: 85px;
+    top: 120px;
+    right: 15%;
+    animation: cloudFloat 30s linear infinite reverse;
+}
+
+.cloud:nth-child(3) {
+    width: 150px;
+    height: 60px;
+    bottom: 180px;
+    left: 10%;
+    animation: cloudFloat 35s linear infinite;
+}
+
+@keyframes cloudFloat {
+    0% { transform: translateX(-100px); }
+    100% { transform: translateX(calc(100vw + 100px)); }
+}
+
+body.day-mode .cloud {
+    opacity: 0.95;
+}
+
+/* Pohon Cemara (hanya siang) */
+.trees {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 180px;
+    z-index: 15;
+    opacity: 0;
+    transition: opacity 1.5s;
+}
+
+.tree {
+    position: absolute;
+    bottom: 0;
+}
+
+/* Pohon Cemara 1 */
+.tree-1 {
+    left: 8%;
+    width: 40px;
+    height: 150px;
+}
+
+.tree-1 .trunk {
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    width: 10px;
+    height: 30px;
+    background: #5d4037;
+}
+
+.tree-1 .foliage {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 40px;
+    height: 120px;
+    background: #2e7d32;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.tree-1 .foliage::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: -10px;
+    width: 60px;
+    height: 80px;
+    background: #388e3c;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.tree-1 .foliage::after {
+    content: '';
+    position: absolute;
+    top: -70px;
+    left: -20px;
+    width: 80px;
+    height: 60px;
+    background: #4caf50;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* Pohon Cemara 2 */
+.tree-2 {
+    left: 25%;
+    width: 50px;
+    height: 180px;
+}
+
+.tree-2 .trunk {
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    width: 12px;
+    height: 35px;
+    background: #4e342e;
+}
+
+.tree-2 .foliage {
+    position: absolute;
+    bottom: 35px;
+    left: 0;
+    width: 50px;
+    height: 145px;
+    background: #1b5e20;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.tree-2 .foliage::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -15px;
+    width: 80px;
+    height: 100px;
+    background: #2e7d32;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.tree-2 .foliage::after {
+    content: '';
+    position: absolute;
+    top: -90px;
+    left: -25px;
+    width: 100px;
+    height: 80px;
+    background: #388e3c;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* Pohon Cemara 3 */
+.tree-3 {
+    right: 20%;
+    width: 45px;
+    height: 160px;
+}
+
+.tree-3 .trunk {
+    position: absolute;
+    bottom: 0;
+    left: 18px;
+    width: 11px;
+    height: 32px;
+    background: #3e2723;
+}
+
+.tree-3 .foliage {
+    position: absolute;
+    bottom: 32px;
+    left: 0;
+    width: 45px;
+    height: 128px;
+    background: #33691e;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.tree-3 .foliage::before {
+    content: '';
+    position: absolute;
+    top: -45px;
+    left: -12px;
+    width: 70px;
+    height: 90px;
+    background: #558b2f;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.tree-3 .foliage::after {
+    content: '';
+    position: absolute;
+    top: -80px;
+    left: -22px;
+    width: 90px;
+    height: 70px;
+    background: #689f38;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* Pohon Cemara 4 */
+.tree-4 {
+    right: 5%;
+    width: 35px;
+    height: 130px;
+}
+
+.tree-4 .trunk {
+    position: absolute;
+    bottom: 0;
+    left: 13px;
+    width: 9px;
+    height: 25px;
+    background: #5d4037;
+}
+
+.tree-4 .foliage {
+    position: absolute;
+    bottom: 25px;
+    left: 0;
+    width: 35px;
+    height: 105px;
+    background: #2d5a27;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.tree-4 .foliage::before {
+    content: '';
+    position: absolute;
+    top: -35px;
+    left: -8px;
+    width: 50px;
+    height: 70px;
+    background: #3a6b31;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.tree-4 .foliage::after {
+    content: '';
+    position: absolute;
+    top: -60px;
+    left: -15px;
+    width: 65px;
+    height: 55px;
+    background: #4caf50;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+body.day-mode .trees {
+    opacity: 1;
+}
+
+/* Elemen Dekoratif Islami */
+.islamic-pattern {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23fff' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
+    z-index: 1;
+}
+
+.pattern-1 {
+    top: 10%;
+    left: 5%;
+    transform: rotate(15deg);
+}
+
+.pattern-2 {
+    bottom: 10%;
+    right: 5%;
+    transform: rotate(-15deg);
+}
+
+/* Responsive untuk Landscape dan Portrait */
+@media (orientation: portrait) {
+    .container {
+        height: auto;
+        min-height: 100vh;
+        overflow-y: auto;
+        justify-content: flex-start;
+        padding-top: 100px;
+        padding-bottom: 50px;
+    }
+    
+    .header h1 {
+        font-size: 3rem;
+    }
+    
+    .ramadan-date {
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .ramadan-date h2 {
+        font-size: 1.8rem;
+    }
+    
+    .ramadan-date p {
+        font-size: 1.2rem;
+    }
+    
+    .countdown-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin: 30px auto;
+    }
+    
+    .countdown-box {
+        padding: 25px 10px;
+    }
+    
+    .countdown-value {
+        font-size: 2.8rem;
+    }
+    
+    .countdown-label {
+        font-size: 0.9rem;
+    }
+    
+    .sun-moon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .moon-mode.active {
+        top: 20px;
+        right: 20px;
+    }
+    
+    .sun-mode.active {
+        top: 20px;
+        left: 20px;
+    }
+    
+    .trees {
+        height: 120px;
+    }
+    
+    .tree-1, .tree-2, .tree-3, .tree-4 {
+        transform: scale(0.7);
+    }
+    
+    .shooting-star {
+        width: 120px;
+        transform: rotate(-45deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .header p {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+    
+    .ramadan-date {
+        max-width: 90%;
+        padding: 15px;
+    }
+    
+    .countdown-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        max-width: 90%;
+    }
+    
+    .countdown-value {
+        font-size: 2.2rem;
+    }
+    
+    .cloud:nth-child(1),
+    .cloud:nth-child(2),
+    .cloud:nth-child(3) {
+        display: none;
+    }
+    
+    .sun-moon {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .shooting-star {
+        width: 100px;
+        transform: rotate(-45deg);
+    }
+}
+
+@media (max-height: 700px) and (orientation: landscape) {
+    .container {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    
+    .header {
+        margin-bottom: 20px;
+    }
+    
+    .header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .ramadan-date {
+        margin-bottom: 20px;
+        padding: 15px;
+    }
+    
+    .ramadan-date h2 {
+        font-size: 1.5rem;
+    }
+    
+    .ramadan-date p {
+        font-size: 1rem;
+    }
+    
+    .countdown-container {
+        margin: 20px auto;
+        gap: 15px;
+    }
+    
+    .countdown-box {
+        padding: 15px 10px;
+    }
+    
+    .countdown-value {
+        font-size: 2.2rem;
+    }
+    
+    .trees {
+        height: 120px;
+    }
+    
+    .shooting-star {
+        width: 150px;
+    }
+}
+
+/* Animasi untuk elemen masuk */
+.fade-in {
+    animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
